@@ -1,0 +1,30 @@
+name: Python Application CI
+
+# 1. TRIGGER: When should this pipeline wake up?
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 2. JOBS: What work should be done?
+jobs:
+  run-tests:
+    name: Run Automated Unit Tests
+    runs-on: ubuntu-latest  # Runs on a fresh Ubuntu VM in GitHub's cloud
+
+    steps:
+      # Step 1: Download/clone our repository code onto the runner
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python on the runner
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3: Run the automated unit tests!
+      - name: Execute Tests
+        run: |
+          python test_app.py
